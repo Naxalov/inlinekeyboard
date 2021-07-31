@@ -9,17 +9,22 @@ def echo(update,context):
    bot.sendMessage(chat_id,text)
 
 def button(update,context):
-    inline_btn = InlineKeyboardButton(text='inline button',callback_data='data')
-    
-    btn = InlineKeyboardMarkup(inline_keyboard=[[inline_btn]])
+    keyboard = [
+        [
+            InlineKeyboardButton("Option 1", callback_data='1'),
+            InlineKeyboardButton("Option 2", callback_data='2'),
+        ],
+    ]
 
+    reply_markup = InlineKeyboardMarkup(keyboard)
 
     update.message.reply_text("Use /start to test this bot.",
-    reply_markup = btn
+    reply_markup = reply_markup
     )  
 
 def get_data(update,context):
     query = update.callback_query
+    query.answer('TXT')
     print('get data:',query.data)
 
 updater = Updater(TOKEN)
