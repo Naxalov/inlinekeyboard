@@ -1,4 +1,4 @@
-from telegram.ext import Updater,MessageHandler,Filters
+from telegram.ext import Updater,MessageHandler,Filters,CallbackQueryHandler
 from telegram import ReplyKeyboardMarkup,InlineKeyboardMarkup,InlineKeyboardButton
 import telegram
 TOKEN = '1602686596:AAE-FOfkyiIrIxqO7qWNF7eTlsqYomfU03c'
@@ -18,8 +18,15 @@ def button(update,context):
     reply_markup = btn
     )  
 
+def get_data(update,context):
+    query = update.callback_query
+    print('get data:',query.data)
+
 updater = Updater(TOKEN)
 updater.dispatcher.add_handler(MessageHandler(Filters.text('1'), button))
+
+# handler for callback data
+updater.dispatcher.add_handler(CallbackQueryHandler(get_data))
 updater.dispatcher.add_handler(MessageHandler(Filters.text, echo))
 updater.start_polling()
 updater.idle()
